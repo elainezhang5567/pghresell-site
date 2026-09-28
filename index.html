@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sell More, Do Less</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap">
+<style>
+  :root{
+    --ground:#FAF8F3;
+    --ink:#121212;
+    --gold:#D4A62A;
+    --gold-deep:#B88C1C;
+    --slate:#1B2A3B;
+    --muted:#4B4A46;
+    --tile:#F0E8D6;
+    --card:#FFFFFF;
+    --line:#E3DDD0;
+    --green:#1E8E3E;
+    color-scheme:light;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1320px;margin:0 auto;padding-inline:24px}
+
+  /* ---------- nav ---------- */
+  .navbar{background:var(--ink);color:var(--ground);border-bottom:3px solid var(--gold);position:relative}
+  .navbar::after{content:"";position:absolute;left:0;right:0;top:100%;height:28px;background:linear-gradient(to bottom,rgba(18,18,18,.14),rgba(18,18,18,0));pointer-events:none}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-block:26px}
+  .brand{display:flex;align-items:baseline;text-decoration:none;color:var(--ground);font-family:"Anton",Impact,"Arial Narrow",sans-serif;text-transform:uppercase;line-height:1}
+  .brand .pgh{font-size:36px;letter-spacing:-.01em}
+  .brand .resell{font-size:16px;color:var(--gold);letter-spacing:.02em;margin-left:2px}
+  .nav-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:14px 44px;list-style:none;margin:0;padding:0}
+  .nav-links a{font-family:"Anton",Impact,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:20px;color:var(--ground);text-decoration:none;line-height:1;transition:color .12s ease}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-links a.login{color:var(--gold)}
+  .nav-links a.login:hover{color:#fff}
+  @media (max-width:960px){.nav-links{gap:12px 24px;font-size:18px}}
+  @media (max-width:640px){.nav{flex-direction:column;align-items:flex-start;gap:20px;padding-block:22px}.nav-links{justify-content:flex-start}}
+
+  /* ---------- hero ---------- */
+  .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;align-items:center;padding-block:72px 80px}
+  @media (max-width:960px){.hero{grid-template-columns:1fr;gap:40px;padding-block:24px 56px}}
+
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 20px}
+  .eyebrow .pin{width:26px;height:26px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none}
+  .eyebrow .pin svg{width:14px;height:14px}
+
+  h1{
+    font-family:"Anton",Impact,"Arial Narrow",sans-serif;
+    font-weight:400;
+    font-size:clamp(68px,9.6vw,132px);
+    line-height:.9;
+    letter-spacing:-.01em;
+    text-transform:uppercase;
+    margin:0 0 24px;
+    text-wrap:balance;
+  }
+  h1 .gold{color:var(--gold)}
+
+  .lede{font-size:clamp(19px,2vw,23px);font-weight:700;color:var(--slate);margin:0 0 18px;line-height:1.3}
+  .body{max-width:56ch;color:var(--muted);font-size:clamp(16px,1.4vw,19px);margin:0 0 32px}
+
+  .actions{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:36px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:12px;
+    font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:19px;
+    padding:18px 34px;border-radius:6px;text-decoration:none;border:2px solid var(--ink);
+    transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
+  }
+  .btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  .btn-primary{background:var(--gold);color:var(--ink);border-color:var(--gold);min-width:300px}
+  .btn-primary:hover{background:var(--gold-deep);border-color:var(--gold-deep);transform:translateY(-1px)}
+  .btn-primary svg{width:20px;height:20px;transition:transform .12s ease}
+  .btn-primary:hover svg{transform:translateX(4px)}
+  .btn-secondary{background:transparent;color:var(--ink)}
+  .btn-secondary:hover{background:var(--ink);color:var(--ground)}
+  @media (max-width:520px){.btn{width:100%;min-width:0}}
+
+  .proof{display:flex;flex-wrap:wrap;gap:0}
+  .proof .item{display:flex;align-items:center;gap:16px;padding-right:32px}
+  .proof .item + .item{padding-left:32px;border-left:1px solid var(--line)}
+  @media (max-width:520px){
+    .proof{flex-direction:column;gap:20px}
+    .proof .item + .item{padding-left:0;border-left:0}
+  }
+  .proof .icon{width:74px;height:74px;border-radius:50%;background:var(--tile);display:grid;place-items:center;flex:none}
+  .proof .icon svg{width:32px;height:32px}
+  .proof h3{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:22px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;line-height:1}
+  .proof p{margin:0;color:var(--muted);font-size:15.5px;line-height:1.35}
+
+  /* ---------- photo card ---------- */
+  .card{
+    background:var(--card);
+    border:3px solid var(--ink);
+    border-radius:12px;
+    padding:26px;
+    box-shadow:10px 10px 0 var(--ink);
+    transform:rotate(-.4deg);
+  }
+  @media (max-width:960px){.card{transform:none;box-shadow:8px 8px 0 var(--ink)}}
+  .card-head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .card-head .check{width:38px;height:38px;border-radius:50%;background:var(--green);display:grid;place-items:center;flex:none}
+  .card-head .check svg{width:20px;height:20px}
+  .card-head h2{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:24px;letter-spacing:.08em;text-transform:uppercase;margin:0;line-height:1}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid figure{margin:0;position:relative;aspect-ratio:6/5;align-self:start;overflow:hidden;border-radius:4px;background:var(--tile)}
+  .grid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .grid figcaption{
+    position:absolute;left:10px;bottom:10px;
+    font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+    background:var(--ink);color:var(--ground);padding:5px 9px;border-radius:3px;
+    opacity:0;transform:translateY(4px);transition:opacity .15s ease,transform .15s ease;
+  }
+  .grid figure:hover figcaption{opacity:1;transform:none}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  /* ---------- what we sell ---------- */
+  .sell{background:#0F0F0F;color:#F4F1EA;padding-block:72px 64px;--dk-line:#3A3A3A;--dk-mute:#B9B4A8}
+  .sell .wrap{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1fr);gap:28px;align-items:stretch}
+  @media (max-width:1100px){.sell .wrap{grid-template-columns:1fr}}
+
+  /* carousel */
+  .live{position:relative;background:#1A1A1A;border-radius:8px;overflow:hidden;min-height:520px;display:flex;flex-direction:column}
+  .live .tag{position:absolute;top:22px;left:22px;z-index:3;background:var(--gold);color:var(--ink);font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:16px;letter-spacing:.14em;text-transform:uppercase;padding:9px 16px;display:inline-flex;align-items:center;gap:10px}
+  .live .tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);animation:blink 1.6s infinite}
+  @keyframes blink{50%{opacity:.25}}
+  .live .stage{position:relative;flex:1;min-height:420px}
+  .live .slide{position:absolute;inset:0;opacity:0;transition:opacity .45s ease}
+  .live .slide.on{opacity:1}
+  .live .slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .live .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.45) 35%,rgba(0,0,0,0) 62%)}
+  .live .meta{position:absolute;left:28px;right:28px;bottom:26px;z-index:2}
+  .live .title{font-family:"Anton",Impact,"Arial Narrow",sans-serif;text-transform:uppercase;font-size:clamp(20px,2vw,27px);line-height:1.12;letter-spacing:.01em;margin:0 0 8px;max-width:22ch;text-wrap:balance}
+  .live .price{font-family:"Anton",Impact,sans-serif;font-size:clamp(28px,3vw,38px);color:var(--gold);line-height:1;margin:0 0 14px}
+  .live .price small{font-family:"DM Sans",sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--dk-mute);margin-left:10px;font-weight:500}
+  .live .view{color:#F4F1EA;text-decoration:none;font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+  .live .view:hover{color:var(--gold)}
+  .live .arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;background:rgba(0,0,0,.55);border:0;color:#fff;cursor:pointer;font-size:20px;display:grid;place-items:center}
+  .live .arrow:hover{background:var(--gold);color:var(--ink)}
+  .live .arrow.prev{left:0}.live .arrow.next{right:0}
+  .live .dots{position:absolute;right:28px;bottom:32px;z-index:3;display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:45%}
+  .live .dots button{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:#6B6B6B;cursor:pointer}
+  .live .dots button.on{background:var(--gold)}
+  @media (max-width:640px){.live .dots{display:none}}
+
+  /* right column */
+  .sellright{display:flex;flex-direction:column;gap:24px}
+  .stat{border:2px solid var(--gold);border-radius:8px;padding:28px 30px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:24px;align-items:center}
+  @media (max-width:760px){.stat{grid-template-columns:1fr;gap:18px}}
+  .stat .num{font-family:"Anton",Impact,sans-serif;font-size:clamp(64px,7vw,96px);line-height:.85;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .stat .num .plus{color:var(--gold)}
+  .stat .lbl{font-family:"DM Sans",sans-serif;font-weight:700;font-size:clamp(17px,1.5vw,22px);letter-spacing:.12em;text-transform:uppercase;line-height:1.25;padding-right:24px;border-right:1px solid var(--dk-line)}
+  @media (max-width:760px){.stat .lbl{border-right:0;padding-right:0}}
+  .stat .lbl .pulse{display:block;margin-top:10px;color:#3DD86A;font-size:15px;letter-spacing:.1em}
+  .stat .lbl .pulse::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:#3DD86A;margin-right:8px;animation:blink 1.6s infinite}
+  .stat .store{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:22px;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:var(--ink);text-decoration:none;padding:22px 28px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;gap:12px;text-align:center;line-height:1.1}
+  .stat .store:hover{background:var(--gold-deep)}
+
+  .mosaic{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  @media (max-width:760px){.mosaic{grid-template-columns:repeat(3,1fr)}}
+  .mosaic img{width:100%;aspect-ratio:1;object-fit:cover;display:block;border-radius:3px;background:#1A1A1A}
+
+  .cats{grid-column:1/-1;display:grid;grid-template-columns:repeat(7,1fr);gap:14px;margin-top:8px}
+  @media (max-width:1100px){.cats{grid-template-columns:repeat(4,1fr)}}
+  @media (max-width:640px){.cats{grid-template-columns:repeat(2,1fr)}}
+  .cats a{border:2px solid var(--gold);color:#F4F1EA;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.15;min-height:58px;padding:12px 10px;font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:17px;letter-spacing:.12em;text-transform:uppercase;transition:background .12s ease,color .12s ease}
+  .cats a:hover{background:var(--gold);color:var(--ink)}
+
+
+  /* ---------- good fit ---------- */
+  /* B: checker */
+  .checker{max-width:820px;margin:0 auto 30px;background:#fff;border:3px solid var(--ink);border-radius:10px;padding:22px 24px;box-shadow:8px 8px 0 var(--ink)}
+  .checker label{display:block;font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:16px;margin-bottom:10px}
+  .checker .row{display:flex;gap:10px}
+  .checker input{flex:1;font:inherit;font-size:18px;padding:14px 16px;border:2px solid var(--line);border-radius:6px;background:var(--ground)}
+  .checker input:focus{outline:none;border-color:var(--gold)}
+  .checker button{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:18px;padding:0 24px;background:var(--gold);border:2px solid var(--gold);border-radius:6px;cursor:pointer}
+  .checker .res{margin-top:14px;padding:14px 16px;border-radius:6px;font-size:17px;display:none}
+  .checker .res.on{display:block}
+  .checker .res.g{background:#EEF6EE;color:#1F8A3B;border:1px solid #BFDCC3}
+  .checker .res.r{background:#FCEEEE;color:#B32E2E;border:1px solid #F0C4C4}
+  .checker .res.n{background:#FFF7DC;color:#6B5410;border:1px solid #E9D89A}
+  .checker .res strong{font-family:"Anton",Impact,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.04em;margin-right:8px}
+
+
+  .fit{padding-block:80px 88px}
+  .fit .head{text-align:center;max-width:820px;margin:0 auto 28px}
+  .fit h2{font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(44px,6.4vw,88px);line-height:.95;letter-spacing:-.01em;margin:0 0 18px;text-wrap:balance}
+  .fit .sub{font-size:clamp(17px,1.6vw,21px);color:var(--muted);margin:0;line-height:1.45}
+  .fit .callout{display:flex;align-items:center;gap:18px;background:#FFF7DC;border:1px solid #E9D89A;border-radius:8px;padding:16px 22px;max-width:1240px;margin:0 auto 26px;font-style:italic;font-size:clamp(16px,1.4vw,19px);color:var(--ink)}
+  .fit .callout svg{width:40px;height:40px;flex:none}
+  .fit .cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+  @media (max-width:860px){.fit .cols{grid-template-columns:1fr}}
+  .panel{border-radius:10px;padding:26px 28px 14px;border:1px solid;display:flex;flex-direction:column;min-height:100%}
+  .panel.yes{background:#EEF6EE;border-color:#BFDCC3;--pc:#1F8A3B;--pi:#DCEEDF}
+  .panel.no{background:#FCEEEE;border-color:#F0C4C4;--pc:#D63B3B;--pi:#F8D9D9}
+  .panel h3{display:flex;align-items:center;gap:16px;font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(24px,2.4vw,32px);color:var(--pc);margin:0 0 16px;line-height:1}
+  .panel h3 .mark{width:48px;height:48px;border-radius:50%;background:var(--pc);display:grid;place-items:center;flex:none}
+  .panel h3 .mark svg{width:24px;height:24px}
+  .panel ul{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+  .panel li{display:flex;align-items:center;gap:20px;padding:12px 0;border-bottom:1px solid rgba(0,0,0,.08);flex:1}
+  .panel li:last-child{border-bottom:0}
+  .panel .ic{width:58px;height:58px;border-radius:50%;background:var(--pi);display:grid;place-items:center;flex:none}
+  .panel .ic svg{width:32px;height:32px}
+  .panel .t{font-weight:700;font-size:18px;line-height:1.2}
+  .panel .d{color:var(--muted);font-size:15.5px;margin-top:2px}
+
+
+  /* ---------- process ---------- */
+  /* shared process bits */
+  .proc{background:#0F0F0F;color:#F4F1EA;padding-block:72px 80px}
+  .eyeb{display:flex;align-items:center;justify-content:center;gap:18px;font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:18px;letter-spacing:.2em;text-transform:uppercase;margin:0 0 18px}
+  .eyeb::before,.eyeb::after{content:"";width:64px;height:3px;background:var(--gold)}
+  .proc h2{font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(48px,7vw,96px);line-height:.95;margin:0;text-align:center;letter-spacing:-.01em}
+  .numtile{width:84px;height:84px;background:var(--gold);color:var(--ink);font-family:"Anton",Impact,sans-serif;font-size:44px;display:grid;place-items:center;flex:none;clip-path:polygon(0 0,100% 0,100% 82%,82% 100%,0 100%)}
+  .st{font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.03em;line-height:1;margin:0 0 10px}
+  .sd{color:#C9C4B8;line-height:1.55;margin:0}
+  .sd b{color:var(--gold);font-weight:700}
+
+  /* C: 3x2 grid */
+  .C .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+  @media (max-width:960px){.C .grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:600px){.C .grid{grid-template-columns:1fr}}
+  .C .card{background:#181818;border:1px solid #2A2A2A;padding:26px;position:relative;display:flex;flex-direction:column;gap:14px}
+  .C .card .n{position:absolute;top:0;right:0;width:56px;height:56px;background:var(--gold);color:var(--ink);font-family:"Anton",Impact,sans-serif;font-size:30px;display:grid;place-items:center;clip-path:polygon(0 0,100% 0,100% 100%,18% 100%,0 82%)}
+  .C .st{font-size:25px;padding-right:56px;margin-top:6px}
+  .C .sd{font-size:15.5px}
+  .C .card:hover{border-color:var(--gold)}
+
+  /* ---------- pricing ---------- */
+  /* shared pricing */
+  .price{padding-block:72px 80px}
+  .price .head{text-align:center;max-width:860px;margin:0 auto 40px}
+  .price h2{font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(48px,7vw,96px);line-height:.95;letter-spacing:-.01em;margin:0 0 16px;text-wrap:balance}
+  .price .sub{font-size:clamp(17px,1.6vw,21px);color:var(--muted);margin:0}
+  .pcard{background:#0F0F0F;color:#F4F1EA;padding:56px 40px;box-shadow:16px 16px 0 var(--gold);max-width:1100px;margin:0 auto}
+  .split{display:flex;justify-content:center;align-items:flex-start;gap:clamp(20px,5vw,64px)}
+  .split .half{text-align:center}
+  .split .pct{font-family:"Anton",Impact,sans-serif;font-size:clamp(72px,11vw,150px);line-height:.9;color:var(--gold);letter-spacing:-.02em}
+  .split .lab{font-family:"DM Sans",sans-serif;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:15px;color:#B9B4A8;margin-top:12px}
+  .split .slash{font-family:"Anton",Impact,sans-serif;font-size:clamp(48px,7vw,90px);color:#8A857A;line-height:.9;padding-top:.35em}
+  .example{text-align:center;font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:clamp(22px,2.4vw,32px);letter-spacing:.1em;text-transform:uppercase;color:#C9C4B8;margin:36px 0 40px}
+  .example b{color:var(--gold);font-weight:700}
+  .covered{list-style:none;margin:0 auto;padding:0;max-width:640px;display:grid;gap:18px}
+  .covered li{display:flex;align-items:center;gap:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:17px}
+  .covered li::before{content:"";width:18px;height:18px;background:var(--gold);flex:none}
+  .fine{max-width:900px;margin:44px auto 0;font-size:17.5px;line-height:1.6;color:var(--ink)}
+  .fine p{margin:0 0 14px}
+  .fine a{color:var(--ink);font-weight:700}
+
+  /* C: comparison */
+  .C .cmp{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr;border:3px solid var(--ink);box-shadow:16px 16px 0 var(--gold)}
+  @media (max-width:760px){.C .cmp{grid-template-columns:1fr}}
+  .C .col{padding:44px 44px 40px}
+  .C .col.diy{background:#fff;color:var(--ink)}
+  .C .col.us{background:#0F0F0F;color:#F4F1EA;position:relative}
+  .C .col h3{font-family:"Anton",Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:30px;margin:0 0 6px;letter-spacing:.02em}
+  .C .col .who{color:var(--gold);font-weight:700;font-size:16px;margin:0 0 26px}
+  .C .col .who .big{font-family:"Anton",Impact,sans-serif;font-weight:400;font-size:1.9em;line-height:1;vertical-align:-.08em;letter-spacing:.01em}
+  .C .col.diy .who{color:var(--muted)}
+  .C .row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid rgba(128,128,128,.25);font-size:16px}
+  .C .row .k{color:inherit}
+  .C .row .v{font-weight:700;white-space:nowrap}
+  .C .col.diy .row .v.bad{color:#B32E2E}
+  .C .col.us .row .v{color:var(--gold)}
+  .C .tot{margin-top:18px;padding-top:18px;border-top:3px solid currentColor;display:flex;justify-content:space-between;align-items:baseline}
+  .C .tot .k{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:15px}
+  .C .tot .v{font-family:"Anton",Impact,sans-serif;font-size:52px;line-height:1}
+  .C .col.us .tot .v{color:var(--gold)}
+  .C .tot small{display:block;font:500 13px/1.3 "DM Sans",sans-serif;letter-spacing:0;text-transform:none;color:#8A857A;margin-top:4px}
+  .C .basis{text-align:center;color:var(--muted);font-size:14px;margin:14px 0 0}
+
+  /* ---------- about ---------- */
+  .about{padding-block:88px 96px;background:#fff}
+  .about .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center}
+  @media (max-width:900px){.about .wrap{grid-template-columns:1fr;gap:48px}}
+  .photos{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;padding-right:10px}
+  .photos figure{margin:0;position:relative}
+  .photos img{width:100%;display:block;border:3px solid var(--ink);aspect-ratio:3/4;object-fit:cover}
+  .photos .p1{box-shadow:14px 14px 0 var(--gold);margin-top:0}
+  .photos .p2{box-shadow:14px 14px 0 var(--ink);margin-top:56px}
+  @media (max-width:520px){.photos{gap:14px}.photos .p1,.photos .p2{box-shadow:8px 8px 0 var(--gold)}.photos .p2{box-shadow:8px 8px 0 var(--ink);margin-top:32px}}
+  .about .eyeb{justify-content:flex-start;color:var(--gold);font-size:16px;margin-bottom:14px}
+  .about .eyeb::after{display:none}
+  .about h2{font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(56px,7.5vw,104px);line-height:.92;letter-spacing:-.01em;margin:0 0 28px}
+  .about p{font-size:clamp(16px,1.4vw,19px);line-height:1.65;color:var(--ink);margin:0 0 18px;max-width:60ch}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);border:3px solid var(--ink);margin-top:36px}
+  @media (max-width:520px){.stats{grid-template-columns:1fr}}
+  .stats div{padding:26px 16px 22px;text-align:center;border-left:3px solid var(--ink)}
+  .stats div:first-child{border-left:0}
+  @media (max-width:520px){.stats div{border-left:0;border-top:3px solid var(--ink)}.stats div:first-child{border-top:0}}
+  .stats .v{font-family:"Anton",Impact,sans-serif;font-size:clamp(40px,4vw,56px);line-height:1;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+  .stats .v em{font-style:normal;color:var(--gold)}
+  .stats .v svg{width:.85em;height:.85em;vertical-align:-.06em;fill:var(--gold)}
+  .stats .k{font-family:"DM Sans",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12.5px;margin-top:10px;color:var(--ink)}
+
+
+  /* ---------- closing ---------- */
+  /* shared closing */
+  .cta-h{font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;line-height:.95;letter-spacing:-.01em;margin:0;text-wrap:balance}
+  .strike{color:var(--gold);position:relative;white-space:nowrap}
+  .strike::after{content:"";position:absolute;left:-.02em;right:-.02em;top:52%;height:.08em;background:var(--strike,var(--ink))}
+  .B .top{--strike:#F4F1EA}
+  .bigbtn{display:inline-flex;align-items:center;justify-content:center;font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:20px;padding:20px 40px;background:var(--gold);color:var(--ink);text-decoration:none;border:2px solid var(--gold);border-radius:4px}
+  .bigbtn:hover{background:var(--gold-deep);border-color:var(--gold-deep)}
+  .areas{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:16px}
+  .areas i{font-style:normal;margin:0 12px;opacity:.5}
+  .ccard{background:#1C1C1C;border-left:4px solid var(--gold);padding:34px 36px}
+  .ccard h3{font-family:"Anton",Impact,sans-serif;font-weight:400;letter-spacing:.06em;text-transform:uppercase;font-size:26px;color:var(--gold);margin:0 0 18px}
+  .ccard p{margin:0 0 14px;color:#DCD7CB;font-size:17px;line-height:1.6}
+  .ccard p:last-child{margin:0}
+  .ccard .g{color:var(--gold);font-weight:700}
+  .ccard .g a{color:inherit;text-decoration:none}
+
+  /* B: split — CTA left, contact right, gold footer strip */
+  .B .top{background:#0F0F0F;color:#F4F1EA;padding-block:80px 72px;position:relative;overflow:hidden}
+  .B .top .wm{position:absolute;right:-.05em;top:50%;transform:translateY(-50%);font-family:"Anton",Impact,sans-serif;font-size:clamp(220px,34vw,520px);line-height:1;color:#171717;letter-spacing:-.04em;pointer-events:none;user-select:none}
+  .B .top .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
+  @media (max-width:860px){.B .top .wrap{grid-template-columns:1fr}}
+  .B .cta-h{font-size:clamp(52px,7.6vw,110px);color:#F4F1EA}
+  .B .top p.lead{color:#B9B4A8;font-size:clamp(17px,1.6vw,21px);margin:20px 0 28px;max-width:44ch}
+  .B .side{display:grid;gap:18px}
+  .B .ccard{padding:28px 30px}
+  .B .ccard h3{font-size:22px;margin-bottom:12px}
+  .B .ccard p{font-size:16px;margin-bottom:10px}
+  .B .strip{background:var(--gold);color:var(--ink);padding-block:26px}
+  .B .strip .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 32px}
+  .B .strip .cta-h{font-size:clamp(22px,2.4vw,30px)}
+  .B .strip .areas{color:#3E3210;font-size:14px}
+
+  /* ---------- footer ---------- */
+  .foot{background:#0F0F0F;color:#DCD7CB;padding-block:64px 32px}
+  .foot .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:44px;border-bottom:1px solid #2A2A2A}
+  @media (max-width:860px){.foot .cols{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.foot .cols{grid-template-columns:1fr;gap:32px}}
+  .foot .brand{color:#F4F1EA}
+  .foot .brand .pgh{font-size:30px}.foot .brand .resell{font-size:13px}
+  .foot h4{font-family:"Anton",Impact,sans-serif;font-weight:400;letter-spacing:.08em;text-transform:uppercase;font-size:22px;color:var(--gold);margin:0 0 18px}
+  .foot ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  .foot a{color:#DCD7CB;text-decoration:none;font-size:16px}
+  .foot a:hover{color:var(--gold)}
+  .foot address{font-style:normal;font-size:16px;line-height:1.75}
+  .foot .copy{text-align:center;color:#8A857A;font-size:14.5px;padding-top:26px;margin:0}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="wrap">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#" aria-label="PGH Resell home"><span class="pgh">PGH</span><span class="resell">Resell</span></a>
+    <ul class="nav-links">
+      <li><a href="#connect">Let's connect</a></li>
+      <li><a href="#what">What we sell</a></li>
+      <li><a href="#fit">Good fit?</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#licensed">Licensed</a></li>
+      <li><a class="login" href="#login">Login</a></li>
+    </ul>
+  </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" aria-labelledby="headline">
+    <div class="copy">
+      <p class="eyebrow">
+        <span class="pin" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#121212" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </span>
+        Pittsburgh's trusted consignment service
+      </p>
+
+      <h1 id="headline">Sell more,<br><span class="gold">Do less.</span></h1>
+
+      <p class="lede">We photograph, list, ship, and pay you out. You do nothing.</p>
+      <p class="body">Pittsburgh's own consignment service for items with real resale value. Turn your unwanted items into cash, completely hands-off and completely transparent.</p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="#fit">
+          See if your item qualifies
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-secondary" href="#connect">Let's connect</a>
+      </div>
+
+      <div class="proof">
+        <div class="item">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#121212" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4 5.5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10v-6z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <div>
+            <h3>No upfront costs</h3>
+            <p>You only get paid<br>when your item sells.</p>
+          </div>
+        </div>
+        <div class="item">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#121212" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M16.5 6.5c-.5-1.5-2.2-2.5-4.5-2.5-2.8 0-4.5 1.4-4.5 3.3 0 4.4 9 2.3 9 6.8 0 1.9-1.9 3.4-4.5 3.4-2.6 0-4.4-1.2-5-3"/></svg>
+          </span>
+          <div>
+            <h3>50/50 split</h3>
+            <p>Simple, fair,<br>and transparent.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="card" aria-labelledby="card-title">
+      <div class="card-head">
+        <span class="check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+        </span>
+        <h2 id="card-title">Items like these we take</h2>
+      </div>
+      <div class="grid">
+        <figure><img src="images/sneakers.jpg" alt="Pair of Nike sneakers"><figcaption>Sneakers</figcaption></figure>
+        <figure><img src="images/camcorder.jpg" alt="Camcorder with bag, charger and cables"><figcaption>Cameras &amp; camcorders</figcaption></figure>
+        <figure><img src="images/camera.jpg" alt="Boxed security camera"><figcaption>Tech, sealed or used</figcaption></figure>
+        <figure><img src="images/boombox.jpg" alt="Vintage boombox"><figcaption>Vintage audio</figcaption></figure>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<section class="sell" id="what" aria-labelledby="sell-title">
+  <div class="wrap">
+    <h2 id="sell-title" class="sr-only">What we sell</h2>
+
+    <div class="live" id="live">
+      <span class="tag">Live &amp; recent sales</span>
+      <div class="stage" id="stage"></div>
+      <button class="arrow prev" id="prev" aria-label="Previous item">&#8249;</button>
+      <button class="arrow next" id="next" aria-label="Next item">&#8250;</button>
+      <div class="meta">
+        <h3 class="title" id="lv-title">Loading recent sales…</h3>
+        <p class="price" id="lv-price">&nbsp;</p>
+        <a class="view" id="lv-link" href="https://www.ebay.com/str/pghresell" target="_blank" rel="noopener">View on eBay &#8599;</a>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+
+    <div class="sellright">
+      <div class="stat">
+        <div class="num"><span id="sold-count">220</span><span class="plus">+</span></div>
+        <div class="lbl">Items sold<br>for Pittsburgh sellers
+          <span class="pulse">Live count, updating now</span>
+        </div>
+        <a class="store" href="https://www.ebay.com/str/pghresell" target="_blank" rel="noopener">Visit our eBay store &#8599;</a>
+      </div>
+      <div class="mosaic" aria-label="Examples of items we sell">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_0882.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_7064.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_6239.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_6595.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_0903.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_0967.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_4315.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_6572.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_6648.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_6697.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_7106.jpg" alt="" loading="lazy">
+        <img src="https://pghresell-bucket.s3.amazonaws.com/items/img_8638.jpg" alt="" loading="lazy">
+      </div>
+    </div>
+
+    <nav class="cats" aria-label="Categories we sell">
+      <a href="#fit">Sneakers &amp; Apparel</a>
+      <a href="#fit">Electronics</a>
+      <a href="#fit">Collectibles</a>
+      <a href="#fit">Vintage &amp; Antiques</a>
+      <a href="#fit">Sporting Goods</a>
+      <a href="#fit">Tools &amp; Hardware</a>
+      <a href="#fit">Toys &amp; Figures</a>
+    </nav>
+  </div>
+</section>
+
+<section class="fit" id="fit" aria-labelledby="fit-title">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="fit-title">Is your item a good fit?</h2>
+      <p class="sub">We're selective on purpose. It lets us get you the best possible price.<br>Here's what tends to sell well, and what we typically pass on.</p>
+    </div>
+    <div class="checker">
+      <label for="chk">What do you have? Type it and we'll tell you</label>
+      <div class="row"><input id="chk" placeholder="e.g. Nike sneakers, wine glasses, old boombox…"><button id="chk-go" type="button">Check</button></div>
+      <div class="res" id="chk-res"></div>
+    </div>
+    <div class="cols">
+      <div class="panel yes">
+        <h3><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span>Great items to bring us</h3>
+        <ul>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16.5c0-.8.6-1.5 1.4-1.6L9 14l2-4 1.6.8c.6.3 1.3.5 2 .5H15l5 2.5c.8.4 1.2 1.2 1 2.1L20.8 17H3z"/><path d="M3 17v1.5A1.5 1.5 0 0 0 4.5 20h15a1.5 1.5 0 0 0 1.5-1.5V17"/><path d="m11 10 .8-2.4"/></svg></span><div><div class="t">Sneakers &amp; Apparel</div><div class="d">Especially new or with tags</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></svg></span><div><div class="t">Electronics &amp; Computers</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5a4 4 0 0 0 5 5L11 20a2.1 2.1 0 0 1-3-3l8.5-8.5"/><path d="M14.5 6.5 17 4l3 3-2.5 2.5"/></svg></span><div><div class="t">Tools &amp; Hardware</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l4 6-10 11L2 10z"/><path d="M2 10h20M9 4l3 6 3-6M12 10l-3 10M12 10l3 10"/></svg></span><div><div class="t">Vintage &amp; Antiques</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span><div><div class="t">Sporting Goods &amp; Memorabilia</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><circle cx="6.5" cy="6" r="2"/><circle cx="17.5" cy="6" r="2"/><path d="M7 21c0-4 2-7 5-7s5 3 5 7z"/><path d="M12 14v7"/></svg></span><div><div class="t">Toys &amp; Collectibles</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg></span><div><div class="t">Specialty Equipment</div></div></li>
+        </ul>
+      </div>
+
+      <div class="panel no">
+        <h3><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg></span>Items that are not a great fit</h3>
+        <ul>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10l-1 7a4 4 0 0 1-8 0z"/><path d="M12 14v6M8 20h8"/></svg></span><div><div class="t">Glassware</div><div class="d">Fragile and costly to ship safely</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2.5"/><path d="M3 4v5a2 2 0 0 0 2 2M5 4v16M21 4c-2 1-3 3-3 6v10"/></svg></span><div><div class="t">Tableware &amp; Dinnerware</div><div class="d">Similar shipping challenges and limited demand</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"/><path d="M8 5.5 6.5 4M16 5.5 17.5 4"/><path d="M6 21c0-4 2.5-7 6-7s6 3 6 7z"/><path d="M12 13v8"/></svg></span><div><div class="t">Figurines &amp; Knick-Knacks</div><div class="d">Niche market with inconsistent resale value</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="m4 17 5-5 4 4 3-3 4 4"/><circle cx="15.5" cy="9" r="1.5"/></svg></span><div><div class="t">Artwork &amp; Paintings</div><div class="d">Pricing and authentication require specialized expertise</div></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1B1B1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8l5 3-2.5 4L16 9.5V20H8V9.5L5.5 11 3 7z"/><path d="M8 4c0 2 1.8 3.5 4 3.5S16 6 16 4"/></svg></span><div><div class="t">Used Clothing &amp; Shoes</div><div class="d">Without tags, resale value drops significantly</div></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proc C" id="process" aria-labelledby="proc-title"><div class="wrap"><p class="eyeb">The process</p><h2 id="proc-title">How it works</h2><div class="grid"><div class="card"><span class="n">1</span><h3 class="st">Submit your item</h3><p class="sd">Create a free account and tell us what you want to sell. Takes less than 5 minutes.</p></div><div class="card"><span class="n">2</span><h3 class="st">Get your item to us</h3><p class="sd">Ship it directly to us, arrange a free local pickup, or drop it off by appointment at <b>5877 Commerce Street, Suite 212, Pittsburgh, PA 15206</b>. We work around your schedule.</p></div><div class="card"><span class="n">3</span><h3 class="st">We list &amp; market</h3><p class="sd">Our team creates a professional eBay listing with optimized photos and descriptions, marketed to thousands of buyers.</p></div><div class="card"><span class="n">4</span><h3 class="st">Your item sells</h3><p class="sd">When a buyer purchases your item, we handle everything: payment processing, shipping logistics, and customer service.</p></div><div class="card"><span class="n">5</span><h3 class="st">Get paid fast</h3><p class="sd">We take our transparent 50% commission and transfer your earnings to your account. Track your listing in real time through your seller portal and request a payout anytime.</p></div><div class="card"><span class="n">6</span><h3 class="st">No sale? No problem.</h3><p class="sd">If your item hasn't sold within 3 months, you decide what happens next. We'll return it to you or responsibly dispose of it. No strings attached.</p></div></div></div></section>
+
+<section class="price C" id="pricing" aria-labelledby="price-title"><div class="wrap"><div class="head"><h2 id="price-title">Transparent pricing.</h2><p class="sub">A simple, honest split. No tiers, no surprises. Just 50/50 every time.</p></div>
+<div class="cmp">
+  <div class="col us"><h3>Sell with PGH Resell</h3><p class="who">Here's what a <strong class="big">$100</strong> sale looks like</p>
+    <div class="row"><span class="k">eBay seller fees</span><span class="v">Covered by us</span></div>
+    <div class="row"><span class="k">Shipping &amp; packaging</span><span class="v">Covered by us</span></div>
+    <div class="row"><span class="k">Photography, listing, customer service</span><span class="v">Covered by us</span></div>
+    <div class="row"><span class="k">Unsold after 3 months</span><span class="v">Returned to you</span></div>
+    <div class="tot"><span class="k">You keep</span><span class="v">$50<small>and you did nothing</small></span></div>
+  </div>
+</div>
+<div class="fine"><p><b>Zero fees. Zero hassle. Your payout is yours.</b> PGH Resell absorbs 100% of the selling costs. eBay fees, shipping, photography, and all administrative expenses come out of our share, not yours. The 50% you see is the 50% you get, paid directly to your account with no surprise deductions.</p><p><b>Commission is negotiable.</b> Depending on the item, quantity, or your situation, we're open to working something out. <a href="#connect">Reach out</a> and let's talk.</p></div></div></section>
+
+<section class="about" id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="photos">
+      <figure class="p1"><img src="https://pghresell-bucket.s3.amazonaws.com/about/elliot-portrait.jpg" alt="Elliot at graduation, standing beside the Nittany Lion statue" loading="lazy"></figure>
+      <figure class="p2"><img src="https://pghresell-bucket.s3.amazonaws.com/about/elliot-working.jpg" alt="Elliot photographing an item at his desk" loading="lazy"></figure>
+    </div>
+    <div>
+      <p class="eyeb">The person behind the listings</p>
+      <h2 id="about-title">Hi, I'm<br>Elliot.</h2>
+      <p>I've been selling online since 2020, and I noticed the same thing every time: most people have valuable items collecting dust, but no clue how to sell them for what they're worth.</p>
+      <p>Instead of donating to Goodwill or pricing things low at a garage sale, bring them to me. I founded PGH Resell so your items reach the right buyers on eBay, not whoever shows up on a Saturday morning. You walk away with real money. I handle everything else.</p>
+      <div class="stats">
+        <div><div class="v">20<em>26</em></div><div class="k">Founded</div></div>
+        <div><div class="v">1500<em>+</em></div><div class="k">Items sold since 2020</div></div>
+        <div><div class="v">5<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.7l-6.1 3.4 1.4-6.8L2.2 9.6l6.9-.8z"/></svg></div><div class="k">Avg. review score</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="close B" id="connect" aria-label="Get in touch">
+  <div class="top"><div class="wm" aria-hidden="true">PGH</div><div class="wrap">
+    <div><h2 class="cta-h">Stop <span class="strike">waiting</span>.<br>Start earning.</h2><p class="lead">Create a free account and let us handle the selling. You just bring the goods. Questions first? Call, email, or come by.</p><a class="bigbtn" href="#login">Create free account</a></div>
+    <div class="side"><div class="ccard"><h3>Contact us</h3><p>Elliot<br>PGH Resell</p><p class="g"><a href="tel:+17244202293">(724) 420-2293</a><br><a href="mailto:elliot@pghresell.com">elliot@pghresell.com</a></p><p>Reach out anytime. We typically respond within 24 hours.</p></div><div class="ccard"><h3>Our location</h3><p>5877 Commerce Street, Suite 212<br>Pittsburgh, Pennsylvania 15206</p><p>Drop-offs by appointment only. We also offer free local pickup and accept shipped items.</p></div></div>
+  </div></div>
+  <div class="strip" id="licensed"><div class="wrap"><h2 class="cta-h">Pittsburgh made. Pittsburgh proud.</h2><p class="areas">Serving Pittsburgh<i>&middot;</i>Fox Chapel<i>&middot;</i>Sewickley<i>&middot;</i>Mt. Lebanon<i>&middot;</i>and surrounding areas</p></div></div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="cols">
+      <a class="brand" href="#" aria-label="PGH Resell home"><span class="pgh">PGH</span><span class="resell">Resell</span></a>
+      <div><h4>Quick links</h4><ul>
+        <li><a href="#what">What We Sell</a></li><li><a href="#fit">Good Fit?</a></li><li><a href="#process">Process</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#connect">Contact</a></li><li><a href="#login">Seller Login</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><address><a href="tel:+17244202293">(724) 420-2293</a><br><a href="mailto:elliot@pghresell.com">elliot@pghresell.com</a><br>5877 Commerce St, Ste 212<br>Pittsburgh, PA 15206</address></div>
+      <div><h4>Legal</h4><ul><li><a href="#terms">Terms of Service</a></li><li><a href="#privacy">Privacy Policy</a></li><li><a href="#seller-agreement">Seller Agreement</a></li></ul></div>
+    </div>
+    <p class="copy">&copy; 2026 PGH Resell. All rights reserved. Made with pride in Pittsburgh, PA.</p>
+  </div>
+</footer>
+
+
+
+<script>
+(function(){
+  const yes=[['sneaker|nike|jordan|adidas|yeezy|new balance','Sneakers & Apparel'],['laptop|macbook|computer|ipad|phone|iphone|camera|camcorder|console|nintendo|playstation|xbox|headphone|speaker|electronic|tv|monitor|drone|gopro','Electronics & Computers'],['tool|drill|saw|wrench|dewalt|milwaukee|makita|hardware','Tools & Hardware'],['vintage|antique|retro|boombox|record|vinyl|typewriter|radio|projector','Vintage & Antiques'],['jersey|basketball|football|golf|hockey|ski|bike|bicycle|sport|memorabilia|card|signed','Sporting Goods & Memorabilia'],['toy|lego|figure|funko|collectible|pokemon|game','Toys & Collectibles'],['equipment|instrument|guitar|amp|synth|microphone|lens|tripod','Specialty Equipment']];
+  const no=[['glass|wine glass|vase|crystal|pyrex','Glassware','fragile and costly to ship safely'],['plate|dish|dinnerware|tableware|china|bowl|mug|cup','Tableware & Dinnerware','shipping is hard and demand is limited'],['figurine|knick|ornament|precious moments|hummel','Figurines & Knick-Knacks','the market is niche and resale value is inconsistent'],['painting|art|print|canvas|sculpture','Artwork & Paintings','pricing and authentication need a specialist'],['used cloth|worn|jeans|shirt|dress|jacket|used shoe|boots','Used Clothing & Shoes','without tags, resale value drops a lot']];
+  const inp=document.getElementById('chk'),res=document.getElementById('chk-res');
+  function go(){const q=inp.value.trim().toLowerCase();if(!q)return;res.className='res on';
+    const n=no.find(r=>new RegExp(r[0]).test(q));const y=yes.find(r=>new RegExp(r[0]).test(q));
+    if(n&&!/new|tag|nwt|sealed/.test(q)){res.classList.add('r');res.innerHTML='<strong>Probably not.</strong>'+n[1]+' is usually a pass: '+n[2]+'.';}
+    else if(y){res.classList.add('g');res.innerHTML='<strong>Great fit.</strong>'+y[1]+' sells well for us. Bring it in.';}
+    else{res.classList.add('n');res.innerHTML='<strong>Not sure yet.</strong>Send us a photo and we\'ll tell you within a day.';}}
+  document.getElementById('chk-go').addEventListener('click',go);inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+})();
+</script>
+<script>
+(function(){
+  // Live data: on Vercel these hit /api/* (serverless proxies to the PGH Resell API).
+  // If unreachable (local preview, artifact sandbox), the snapshot below is shown instead.
+  const SNAPSHOT_COUNT = 225;
+  const SNAPSHOT = [{"id":"377522847887","img":"https://i.ebayimg.com/images/g/RQoAAeSwzpZqtsza/s-l800.jpg","lp":4299,"sp":null,"st":"active","t":"VTech V.Flash Home Entertainment System Console Bundle w Controller Game Tested"},{"id":"377447062686","img":"https://i.ebayimg.com/images/g/BfgAAeSwQe1qjdxw/s-l800.jpg","lp":5999,"sp":5099,"st":"sold","t":"Vintage Atari Promo Jacket Mens L Blue Nylon Swingster Retro Gaming Bomber"},{"id":"377506632632","img":"https://i.ebayimg.com/images/g/H8AAAeSwd3NqrZSQ/s-l800.jpg","lp":11950,"sp":15500,"st":"sold","t":"NAD Series 20 1020 Preamplifier"},{"id":"377522900970","img":"https://i.ebayimg.com/images/g/N0sAAeSwZ2BqttWD/s-l800.jpg","lp":3499,"sp":null,"st":"active","t":"Vintage Bell & Howell Projector With Multi Motion Model 1638Z Tested Working"},{"id":"377315543780","img":"https://i.ebayimg.com/images/g/Lp4AAeSwvkBqR-4t/s-l800.jpg","lp":1699,"sp":1529,"st":"sold","t":"Wacom Pen Tablet Intuos Draw CTL-490 White"},{"id":"377522912313","img":"https://i.ebayimg.com/images/g/R68AAeSwIZxqttiS/s-l800.jpg","lp":13499,"sp":null,"st":"active","t":"HP EliteBook 645 G10 Laptop AMD Ryzen 5"},{"id":"377523001970","img":"https://i.ebayimg.com/images/g/SmQAAeSwGB1qtuhG/s-l800.jpg","lp":3999,"sp":null,"st":"active","t":"VTG Polo Jeans Co Ralph Lauren M-65 Field Jacket Olive Green Mens L"},{"id":"377522990685","img":"https://i.ebayimg.com/images/g/UcwAAeSwKqZqtudB/s-l800.jpg","lp":2999,"sp":null,"st":"active","t":"Vintage Levi's 550 Denim Shorts Orange Tab Light Wash Mens 32"}];
+
+  const $=id=>document.getElementById(id);
+  const stage=$('stage'),dots=$('dots'),title=$('lv-title'),price=$('lv-price'),link=$('lv-link');
+  const money=c=>'$'+(c/100).toFixed(2);
+  const hi=u=>(u||'').replace(/s-l\d+\.jpg/,'s-l800.jpg');
+  let items=[],i=0,timer;
+
+  function render(list){
+    items=list.filter(x=>x.img);
+    stage.innerHTML='';dots.innerHTML='';
+    items.forEach((it,n)=>{
+      const s=document.createElement('div');s.className='slide';
+      const im=document.createElement('img');im.src=hi(it.img);im.alt=it.t;im.loading=n?'lazy':'eager';
+      s.appendChild(im);stage.appendChild(s);
+      const d=document.createElement('button');d.setAttribute('aria-label','Item '+(n+1));d.addEventListener('click',()=>go(n,true));dots.appendChild(d);
+    });
+    go(0);
+  }
+  function go(n,manual){
+    if(!items.length)return;
+    i=(n+items.length)%items.length;
+    [...stage.children].forEach((s,k)=>s.classList.toggle('on',k===i));
+    [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i));
+    const it=items[i];
+    title.textContent=it.t;
+    const sold=it.st==='sold'&&it.sp!=null;
+    price.innerHTML=money(sold?it.sp:it.lp)+'<small>'+(sold?'Sold':'Listed now')+'</small>';
+    link.href='https://www.ebay.com/itm/'+it.id;
+    if(manual)restart();
+  }
+  function restart(){clearInterval(timer);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>go(i+1),4500);}
+  $('prev').addEventListener('click',()=>go(i-1,true));
+  $('next').addEventListener('click',()=>go(i+1,true));
+
+  render(SNAPSHOT);restart();
+
+  const norm=x=>({id:x.ebay_listing_id,img:x.image_url,lp:x.listing_price_cents,sp:x.sold_price_cents,st:x.status,t:x.title});
+  fetch('/api/listings').then(r=>r.ok?r.json():Promise.reject()).then(d=>{
+    const list=(d.listings||[]).map(norm);
+    if(list.length){render(list);restart();}
+  }).catch(()=>{});
+  fetch('/api/stats').then(r=>r.ok?r.json():Promise.reject()).then(d=>{
+    if(typeof d.items_sold==='number'){
+      const el=$('sold-count'),from=+el.textContent,to=d.items_sold,t0=performance.now();
+      const step=t=>{const p=Math.min(1,(t-t0)/900);el.textContent=Math.round(from+(to-from)*p);if(p<1)requestAnimationFrame(step);};
+      requestAnimationFrame(step);
+    }
+  }).catch(()=>{ $('sold-count').textContent=SNAPSHOT_COUNT; });
+})();
+</script>
+
+
+</body>
+</html>
